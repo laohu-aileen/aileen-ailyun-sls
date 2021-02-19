@@ -29,30 +29,24 @@ export class StorageImpl<T extends LogItem = any> implements AliyunStorage<T> {
    */
   putLogs(data: T[], option: LogOption = {}): Promise<void> {
     const logs = data.map((item) => {
-      const log: {
-        time: number;
-        contents: Array<{
-          key: string;
-          value: string;
-        }>;
-      } = {
-        time: item.time,
-        contents: [],
-      };
+      let time: number | Date = item.time || new Date();
+      if (time instanceof Date) time = Math.floor(time.getTime() / 1000);
 
-      if (!item.time) {
-        log.time = Math.floor(new Date().getTime() / 1000);
-      }
-
+      const contents: Array<{
+        key: string;
+        value: string;
+      }> = [];
       for (const key in item) {
         if (key === "time") continue;
-        log.contents.push({
+        if (item[key] === undefined) continue;
+        if (item[key] === null) continue;
+        contents.push({
           key,
           value: item[key].toString(),
         });
       }
 
-      return log;
+      return { time, contents };
     });
 
     return new Promise((resolve, reject) => {

@@ -19,7 +19,7 @@ export interface FinderOption {
  * 日志数据
  */
 export interface LogItem {
-  time?: number;
+  time?: number | Date;
   topic?: string;
   source?: string;
   [key: string]: any;

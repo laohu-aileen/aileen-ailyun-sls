@@ -1,6 +1,6 @@
 {
   "name": "aileen-aliyun-sls",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Aliyun SLS For Aileen Framework",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
